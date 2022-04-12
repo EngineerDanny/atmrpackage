@@ -1,0 +1,83 @@
+name: Check-R-Package
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-linux:
+    name: Build Package - Linux
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "☁️ Checkout Repository"
+        uses: actions/checkout@v2
+
+      - name: "🔧 Setup R"
+        uses: r-lib/actions/setup-r@v2
+
+      - name: "📦 Install R Package"
+        uses: r-lib/actions/setup-r-dependencies@v2
+
+  build-windows:
+    name: Build Package - Windows
+    runs-on: windows-latest
+
+    steps:
+      - name: "☁️ Checkout Repository"
+        uses: actions/checkout@v2
+
+      - name: "🔧 Setup R"
+        uses: r-lib/actions/setup-r@v2
+
+      - name: "📦 Install R Package"
+        uses: r-lib/actions/setup-r-dependencies@v2
+
+  check-package:
+    name: Check R Package
+    needs:
+      - build-linux
+      - build-windows
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "☁️ Checkout Repository"
+        uses: actions/checkout@v2
+
+      - name: "🔧 Setup R"
+        uses: r-lib/actions/setup-r@v2
+
+      - name: "📦 Install R Package"
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::rcmdcheck
+          needs: check
+
+      - name: "☑️ Check R Package"
+        uses: r-lib/actions/check-r-package@v2
+
+  check-mem-leak:
+    name: Check Memory Leakage
+    needs:
+      - check-package
+    runs-on: ubuntu-latest
+
+    container:
+      image: rhub/ubuntu-rchk
+      options: --user=root
+
+    steps:
+      - name: "☁️ Checkout Repository"
+        uses: actions/checkout@v2
+
+      - name: "📋 No Memory Leakage"
+        uses: r-lib/actions/run-rchk@v2
+        with:
+          setup-only: true
+
+      - name: "📢 Announce Completion"
+        run: echo "All checks are completed"
