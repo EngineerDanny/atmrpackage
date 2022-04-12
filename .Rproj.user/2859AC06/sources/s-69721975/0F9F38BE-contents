@@ -4,8 +4,7 @@ Title: Simple ATM implemented using Rcpp
 Version: 0.1.0
 Author: Daniel Agyapong
 Maintainer: The package maintainer <agyapongdaniel7777@gmail.com>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: An ATM package with withdrawal, deposit and balance check support.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
