@@ -9,39 +9,8 @@ on:
       - main
 
 jobs:
-  build-linux:
-    name: Build Package - Linux
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: "Checkout Repository"
-        uses: actions/checkout@v2
-
-      - name: "Setup R"
-        uses: r-lib/actions/setup-r@v2
-
-      - name: "Install R Package"
-        uses: r-lib/actions/setup-r-dependencies@v2
-
-  build-windows:
-    name: Build Package - Windows
-    runs-on: windows-latest
-
-    steps:
-      - name: "Checkout Repository"
-        uses: actions/checkout@v2
-
-      - name: "Setup R"
-        uses: r-lib/actions/setup-r@v2
-
-      - name: "Install R Package"
-        uses: r-lib/actions/setup-r-dependencies@v2
-
   check-package:
     name: Check R Package
-    needs:
-      - build-linux
-      - build-windows
     runs-on: ubuntu-latest
 
     steps:
