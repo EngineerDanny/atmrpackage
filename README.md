@@ -7,7 +7,7 @@
 
 ### Linux
 ```sh
-Rscript.exe -e 'devtools::install_github("EngineerDanny/atmrpackage")'
+Rscript -e 'devtools::install_github("EngineerDanny/atmrpackage")'
 ```
 
 ## GitHub Actions Workflow
